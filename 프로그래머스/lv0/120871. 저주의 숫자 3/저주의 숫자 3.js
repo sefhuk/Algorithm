@@ -1,0 +1,11 @@
+const solution = (n) => {
+  let arr = [];
+  let num = 1;
+  while (arr.length <= n) {
+    if (num % 3 !== 0 && !num.toString().split('').includes('3')) {
+      arr.push(num);
+    }
+    num++;
+  }
+  return arr[n - 1];
+};
