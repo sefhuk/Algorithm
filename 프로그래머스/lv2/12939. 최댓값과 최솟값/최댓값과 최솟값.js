@@ -1,0 +1,5 @@
+function solution(s) {
+  let arr = s.split(' ').map((e) => Number(e));
+
+  return `${Math.min(...arr)} ${Math.max(...arr)}`;
+}
