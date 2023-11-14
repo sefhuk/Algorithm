@@ -8,16 +8,16 @@ class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int[] num = new int[st.countTokens()];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int[] nums = new int[N];
         for (int i = 0; st.hasMoreTokens(); i++) {
-            num[i] = Integer.parseInt(st.nextToken());
+            nums[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(num);
+        Arrays.sort(nums);
 
-        bw.write(num[0] + " " + num[num.length - 1]);
+        bw.write(nums[0] + " " + nums[N - 1]);
         bw.close();
     }
 }
