@@ -1,22 +1,23 @@
 import java.io.*;
+import java.util.StringTokenizer;
 
 class Main {
     public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        BufferedReader br = new BufferedReader(new InputStreamReader((System.in)));
 
         int N = Integer.parseInt(br.readLine());
-        String[] num = br.readLine().split(" ");
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int v = Integer.parseInt(br.readLine());
 
-        int result = 0;
-        for (String i : num) {
-            if (Integer.parseInt(i) == v) {
-                result++;
+        int num = 0;
+        while (st.hasMoreTokens()) {
+            if (v == Integer.parseInt(st.nextToken())) {
+                num++;
             }
         }
 
-        bw.write(result + "");
+        bw.write(num + "");
         bw.close();
     }
 }
