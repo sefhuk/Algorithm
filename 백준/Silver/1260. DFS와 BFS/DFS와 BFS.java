@@ -1,71 +1,69 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-class Main {
-    private static boolean isVisited[];
-    private static ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-    public static StringBuilder sb = new StringBuilder();
-    public static Queue<Integer> q = new LinkedList<>();
+public class Main {
+	
+	static int[][] graph;
+	static boolean[] visited;
+	static int N, M, V;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    public static void main(String[] args) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  public static void main(String[] args) throws Exception {
+    
+	StringTokenizer st = new StringTokenizer(br.readLine());
+	N = Integer.parseInt(st.nextToken());
+	M = Integer.parseInt(st.nextToken());
+	V = Integer.parseInt(st.nextToken());
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int V = Integer.parseInt(st.nextToken());
+	graph = new int[N + 1][N+1];
+	visited = new boolean[N + 1];
 
-        isVisited = new boolean[N + 1];
+	for(int i = 0; i < M; i++) {
+		st = new StringTokenizer(br.readLine());
+		int start = Integer.parseInt(st.nextToken());
+		int end = Integer.parseInt(st.nextToken());
+		graph[start][end] = 1;
+		graph[end][start] = 1;
+	}
+	
+	dfs(V);
+	bw.flush();
+	bw.newLine();
+	bfs(V);
+  }
 
-        for (int i = 0; i < N+1; i++) {
-            list.add(new ArrayList<>());
-        }
+  private static void dfs(int start) throws Exception {
+	  visited[start] = true;
+	  bw.write(start + " ");
+		
+	  for(int i = 1; i <= N; i++) {
+		  if(!visited[i] && graph[start][i] == 1) {
+			  dfs(i);
+		  }
+	  }
+  }
 
-        for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            int vert1 = Integer.parseInt(st.nextToken());
-            int vert2 = Integer.parseInt(st.nextToken());
-            list.get(vert1).add(vert2);
-            list.get(vert2).add(vert1);
-        }
+  private static void bfs(int start) throws Exception {
 
-        for (ArrayList<Integer> i : list) {
-            Collections.sort(i);
-        }
+	  Queue<Integer> q = new LinkedList<>();
+	  q.offer(start);
+	  visited = new boolean[N + 1];
+	  visited[start] = true;
 
-        dfs(V);
-        sb.append("\n");
+	  while(!q.isEmpty()) {
+		  int pop = q.poll();
+		  
+		  for(int i = 1; i <= N; i++) {
+			  if(!visited[i] && graph[pop][i] == 1) {
+				  q.offer(i);
+				  visited[i] = true;
+			  }
+		  }
 
-        isVisited = new boolean[N + 1];
-        bfs(V);
+		  bw.write(pop + " ");
+	  }
 
-        bw.write(sb.toString());
-        bw.close();
-    }
-
-    public static void dfs(int start) {
-        isVisited[start] = true;
-        sb.append(start + " ");
-        for (int i = 0; i < list.get(start).size(); i++) {
-            if (!isVisited[list.get(start).get(i)]) {
-                dfs(list.get(start).get(i));
-            }
-        }
-    }
-
-    public static void bfs(int start) {
-        q.offer(start);
-        isVisited[start] = true;
-        while (!q.isEmpty()) {
-            int poped = q.poll();
-            sb.append(poped + " ");
-            for (int i = 0; i < list.get(poped).size(); i++) {
-                if (!isVisited[list.get(poped).get(i)]) {
-                    q.offer(list.get(poped).get(i));
-                    isVisited[list.get(poped).get(i)] = true;
-                }
-            }
-        }
-    }
+	  bw.flush();
+  }
 }
